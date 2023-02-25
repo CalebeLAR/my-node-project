@@ -13,26 +13,18 @@ async function readFile() {
   }
 }
 
-async function writeFile(obj) {
+async function writeNewFile(obj) {
   try {
     const previousMissions = await readFile(); 
     const newMission = [...previousMissions, obj];
 
     await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify(newMission));
-
   } catch (e) {
     console.error("ALGO DEU ERRADO\n", e);
   }
 }
 
-writeFile({
-  "name": "MORDEKAISER",
-  "age": 7,
-  "id": 5,
-  "talk": { "watchedAt": "23/10/2021", "rate": 7 }
-});
-
-
 module.exports = {
-  readFile
+  readFile,
+  writeNewFile
 }
