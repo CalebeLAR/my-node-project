@@ -5,7 +5,7 @@ const dir_file = '../../data/missions.json'
 
 async function readFile() {
   try {
-    const data = await fs.readFile(path.resolve(__dirname, dir_file))
+    const data = await fs.readFile(path.resolve(__dirname, dir_file));
     const missions = JSON.parse(data); // se esse .json estiver vazio, o parse da problema!
     return missions;
   } catch(error) {
@@ -16,7 +16,7 @@ async function readFile() {
 async function writeNewFile(obj) {
   try {
     const previousMissions = await readFile(); 
-    const newMission = [...previousMissions, obj];
+    const newMission = [...previousMissions, { id: Date.now(),...obj}];
 
     await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify(newMission));
   } catch (e) {
@@ -24,7 +24,4 @@ async function writeNewFile(obj) {
   }
 }
 
-module.exports = {
-  readFile,
-  writeNewFile
-}
+module.exports = writeNewFile;

@@ -1,15 +1,22 @@
-const { writeNewFile } = require('./src/utils/fsUtils.js');
+const writeNewFile = require('./src/utils/fsUtils.js');
+const readline = require('readline-sync');
 
 const main = async () => {
-  await writeNewFile({
-    "name": "Jhin",
-    "age": 33,
-    "id": 90,
+  const name = readline.question('nome: '); 
+  const age = readline.question('age: '); 
+  const watchedAt = readline.question('watchedAt: '); 
+  const rate = readline.question('rate: '); 
+  
+  const nemPerson = {
+    name,
+    age,
     "talk": {
-      "watchedAt": "23/10/2020",
-      "rate": 7
+      watchedAt,
+      rate
     }
-  })
-}
+  };
+
+  await writeNewFile(nemPerson);
+};
 
 main();
