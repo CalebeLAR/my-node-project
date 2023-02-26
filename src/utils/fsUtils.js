@@ -24,4 +24,4 @@ async function writeNewFile(obj) {
   }
 }
 
-module.exports = writeNewFile;
+module.exports = { writeNewFile, readFile };

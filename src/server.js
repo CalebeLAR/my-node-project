@@ -1,6 +1,6 @@
 const app = require('./app');
 
-const PORT = 3001;
+const PORT = 3000;
 
-app.listen(3001, () => console.log(`Back-end rodando na porta ${PORT}`));
+app.listen(PORT, () => console.log(`Back-end rodando na porta ${PORT}`));
 
