@@ -1,5 +1,5 @@
-# Introducao ao desenvolvimento web com node js
+# my-node-project
 
-## my-node-project
++ Um mine editor de arquivos usados os modulos readlinde-sync e nodemon
 
-* libs:
+
