@@ -8,4 +8,4 @@
 + [x] Criar nosso primeiro end-point GET
 + [x] Listar estudantes por meio do método GET
 + [x] Cadastrar estudantes pelo método POST
-+ [x] arualizar missões pelo método POST
++ [x] atualizar missões pelo método PUT

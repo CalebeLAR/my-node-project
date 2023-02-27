@@ -20,6 +20,7 @@ async function writeNewMissionData(obj) {
     const newMissions = { missions: [...previousMissions.missions, newMission] };
 
     await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify(newMissions));
+    console.error("Missão adicionada com sucesso");
     return newMission;
   } catch (error) {
     console.error("ERRO: função writeNewMissionData", error.message);
@@ -27,15 +28,39 @@ async function writeNewMissionData(obj) {
 }
 
 async function updateMissionData (id, updatedMissionData) {
-  const { missions:{ oldMissions }} = await readMissionsData();
-  const updatedMission = { id, ...updatedMission}
+  const { missions:oldMissions } = await readMissionsData();
+  const updatedMission = { id, ...updatedMissionData}
   const updatedMIssions = oldMissions.reduce((missionsList, currentMission)=>{
     if(currentMission.id === updatedMission.id) return [...missionsList, updatedMission];
-    return [missionsList, currentMission];
+    return [...missionsList, currentMission];
   }, [])
-  const updatedData = JSON.stringify(updatedMIssions);
 
-  
+  try {
+    await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify({ missions: [...updatedMIssions] }));
+    console.error("Missão atualizada com sucesso");
+    return updatedMIssions;
+  } catch (error) {
+    console.error("ERRO: função updateMissionData", error.message);
+  }
+
+
 }
 
-module.exports = { readMissionsData, writeNewMissionData };
+async function deleteMissionData (id, updatedMissionData) {
+  const { missions:oldMissions } = await readMissionsData();
+  const updatedMIssions = oldMissions.filter((mission) => mission.id !== id);
+
+  try {
+    await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify({ missions: [...updatedMIssions] }));
+    console.error("Missão deletada com sucesso");
+  } catch (error) {
+    console.error("ERRO: função deleteMissionData", error.message);
+  }
+}
+
+module.exports = { 
+    readMissionsData,
+    writeNewMissionData,
+    updateMissionData,
+    deleteMissionData 
+};
