@@ -3,7 +3,7 @@ const path = require('path');
 
 const dir_file = '../../data/missions.json'
 
-async function readFile() {
+async function readMissionsData () {
   try {
     const data = await fs.readFile(path.resolve(__dirname, dir_file));
     const missions = JSON.parse(data); // se esse .json estiver vazio, o parse da problema!
@@ -15,13 +15,19 @@ async function readFile() {
 
 async function writeNewFile(obj) {
   try {
-    const previousMissions = await readFile(); 
-    const newMission = [...previousMissions, { id: Date.now(),...obj}];
+    const previousMissions = await readMissionsData();
+    const newMission =  { id: Date.now(),...obj};
+    const newMissions = [...previousMissions, { id: Date.now(),...obj}];
 
-    await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify(newMission));
+    await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify(newMissions));
+    return newMission;
   } catch (e) {
     console.error("ALGO DEU ERRADO\n", e);
   }
 }
 
-module.exports = { writeNewFile, readFile };
+async function updateMissionData () {
+  const oldMission = await readMissionsData();
+}
+
+module.exports = { writeNewFile, readMissionsData };

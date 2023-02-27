@@ -2,18 +2,16 @@ const { writeNewFile } = require('./src/utils/fsUtils.js');
 const readline = require('readline-sync');
 
 const main = async () => {
-  const name = readline.question('nome: '); 
-  const age = readline.question('age: '); 
-  const watchedAt = readline.question('watchedAt: '); 
-  const rate = readline.question('rate: '); 
+  const name = readline.question('Digite o nome da missão: '); 
+  const year = readline.question('Digite o ano da missão: '); 
+  const country = readline.question('Digite o qual pais realizou a missão: '); 
+  const destination = readline.question('Digite o destino da missão: '); 
   
   const nemPerson = {
     name,
-    age,
-    "talk": {
-      watchedAt,
-      rate
-    }
+    year,
+    country,
+    destination
   };
 
   await writeNewFile(nemPerson);
