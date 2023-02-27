@@ -9,25 +9,33 @@ async function readMissionsData () {
     const missions = JSON.parse(data); // se esse .json estiver vazio, o parse da problema!
     return missions;
   } catch(error) {
-    console.error('ERRO: ', error.message);
+    console.error('ERRO: função readMissionsData', error.message);
   }
 }
 
-async function writeNewFile(obj) {
+async function writeNewMissionData(obj) {
   try {
     const previousMissions = await readMissionsData();
     const newMission =  { id: Date.now(),...obj};
-    const newMissions = [...previousMissions, { id: Date.now(),...obj}];
+    const newMissions = { missions: [...previousMissions.missions, newMission] };
 
     await fs.writeFile(path.resolve(__dirname, dir_file), JSON.stringify(newMissions));
     return newMission;
-  } catch (e) {
-    console.error("ALGO DEU ERRADO\n", e);
+  } catch (error) {
+    console.error("ERRO: função writeNewMissionData", error.message);
   }
 }
 
-async function updateMissionData () {
-  const oldMission = await readMissionsData();
+async function updateMissionData (id, updatedMissionData) {
+  const { missions:{ oldMissions }} = await readMissionsData();
+  const updatedMission = { id, ...updatedMission}
+  const updatedMIssions = oldMissions.reduce((missionsList, currentMission)=>{
+    if(currentMission.id === updatedMission.id) return [...missionsList, updatedMission];
+    return [missionsList, currentMission];
+  }, [])
+  const updatedData = JSON.stringify(updatedMIssions);
+
+  
 }
 
-module.exports = { writeNewFile, readMissionsData };
+module.exports = { readMissionsData, writeNewMissionData };
