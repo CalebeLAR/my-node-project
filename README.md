@@ -9,8 +9,10 @@
 + [x] Listar estudantes por meio do método GET
 + [x] Cadastrar estudantes pelo método POST
 + [x] atualizar missões pelo método PUT
-
++ [x] deleter missões pelo método DELETE
++ [x] Usar o padrao REST
 
 ## dia 3
 
 + [x] Criar testes unitários com mocha e chai
++ [x] Criar testes de integração com o chai-http
