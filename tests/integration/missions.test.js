@@ -50,6 +50,7 @@ describe('tests de rotas', function () {
   });
 
   describe('testes para o app.post(/missions)', async function () {
+    
     it('app.post(/missions) deve retornar uma chave missions com um array de missões e um estatus 201 OK!', async function () {
       const mockRequest = {
         name: 'mocktest',
@@ -68,6 +69,21 @@ describe('tests de rotas', function () {
       expect(response.body.missions.year).to.equal(mockRequest.year);
       expect(response.body.missions.country).to.equal(mockRequest.country);
       expect(response.body.missions.destination).to.equal(mockRequest.destination);
+      
+    });
+
+    it('app.post(/missions) deve retornar uma chave missions com um array de missões e um estatus 201 OK!', async function () {
+      const mockRequest = {
+        name: 'mocktest',
+        year: 2023,
+        country: 'trybe',
+        destination: 'expect'
+      }
+      sinon.stub(fs, 'writeFile').resolves()
+      // verifica se o modulo fs.writeFile foi chamado. CALLED
+      expect(fs.writeFile.called).to.be.equal(true)
+      const response = await chai.request(app).post('/missions').send(mockRequest);
+
       
     });
   });
