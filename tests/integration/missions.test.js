@@ -1,20 +1,51 @@
 const app = require('../../src/app.js');
+const sinon = require('sinon');
+const fs = require('fs/promises');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { expect } = chai;
 
-chai.use(chaiHttp)
+chai.use(chaiHttp);
+
 
 describe('tests de rotas', function () {
-
   describe('testes para o app.get(/missions)', async function () {
     it('app.get(/missions) deve retornar uma chave missions com um array de missões e um estatus 200 OK!', async function () {
+
+      const mockDataMissions = JSON.stringify({
+        "missions":[
+          {
+            "id": 1,
+            "name": "Mariner 2",
+            "year": "1962",
+            "country": "United States",
+            "destination": "Vênus"
+          },
+          {
+            "id": 2,
+            "name": "Mariner 5",
+            "year": "1967",
+            "country": "United States",
+            "destination": "Vênus"
+          },
+          {
+            "id": 3,
+            "name": "Venera 4",
+            "year": "1967",
+            "country": "URSS",
+            "destination": "Vênus"
+          }
+        ]
+      });
+
+      sinon.stub(fs, 'readFile').resolves(mockDataMissions);
       const response = await chai.request(app).get('/missions');
       
       expect(response.status).to.be.equal(200);
       expect(response.body).to.haveOwnProperty('missions');
       expect(response.body.missions).to.be.instanceof(Array);
-      
+      expect(response.body.missions).to.be.lengthOf(3);
+      sinon.restore();
     });
   });
 
@@ -26,6 +57,7 @@ describe('tests de rotas', function () {
         country: 'trybe',
         destination: 'expect'
       }
+      sinon.stub(fs, 'writeFile').resolves()
       const response = await chai.request(app).post('/missions').send(mockRequest);
 
       expect(response.status).to.be.equal(201);
