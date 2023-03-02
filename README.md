@@ -16,3 +16,4 @@
 
 + [x] Criar testes unitários com mocha e chai
 + [x] Criar testes de integração com o chai-http
++ [x] Criar simulações com o sinon.stub
