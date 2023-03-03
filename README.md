@@ -17,3 +17,7 @@
 + [x] Criar testes unitários com mocha e chai
 + [x] Criar testes de integração com o chai-http
 + [x] Criar simulações com o sinon.stub
+
+## dia 4
+
++ [x] Introduzindo middlewares aos end-points
