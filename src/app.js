@@ -51,4 +51,13 @@ app.delete('/missions/:id', validateMissionID, async (req, res) => {
   return res.sendStatus(204);
 });
 
+app.use((error, req, res, next)=> {
+  console.log(error.stack);
+  next();
+})
+
+app.use((error, req, res, next)=> {
+  res.status(500).send({message: "erro: capturado em app.use(error)"})
+})
+
 module.exports = app;
