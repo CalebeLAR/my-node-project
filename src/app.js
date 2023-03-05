@@ -1,3 +1,4 @@
+require('express-async-errors');
 const express = require('express');
 const { readMissionsData, writeNewMissionData, updateMissionData, deleteMissionData } = require('./utils/fsUtils')
 
@@ -6,30 +7,28 @@ app.use(express.json());
 
 const validateMissionID = (req,res, next) => {
   const { id } = req.params;
-  try {
-    const numericID = Number(id)
-    if( Number.isNaN(numericID)) return res.status(400).send({message:'ID inválido! Precisa ser um número'});
-    next();
-  } catch (error) {
-    console.error('ERRO! algo deu errado na validação do ID.');
-  }
+  const numericID = Number(id)
+  if( Number.isNaN(numericID)) return res.status(400).send({message:'ID inválido! Precisa ser um número'});
+  next();
 };
 
 const validateMissionData = (req, res, next) => {
   const requiredProperties = [ 'name', 'year', 'country', 'destination'];
-  try {
-    if( requiredProperties.every((propeties) => propeties in req.body)) return next();
-    return res.status(400).send({missions: 'A missão precisa receber os atributos name, year, country e destination'})
-  } catch (error) {
-    console.error('ERRO! algo deu errado na validação de MissonsData.');
-  }
+  if( requiredProperties.every((propeties) => propeties in req.body)) return next();
+  return res.status(400).send({missions: 'A missão precisa receber os atributos name, year, country e destination'})
 };
-
 
 app.get('/missions', async (req, res) => {
   const allMissions = await readMissionsData();
-
   return res.status(200).json(allMissions);
+});
+
+app.get('/missions/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const { missions: allMissions } = await readMissionsData();
+  const mission = allMissions.find((m)=> m.id === id);
+  if (mission) return res.status(200).json(mission);
+  if (!mission) return res.status(200).json({message: "missão não encontrada"});
 });
 
 app.post('/missions', validateMissionData,  async (req, res) => {
@@ -53,11 +52,11 @@ app.delete('/missions/:id', validateMissionID, async (req, res) => {
 
 app.use((error, req, res, next)=> {
   console.log(error.stack);
-  next();
-})
+  next(error);
+});
 
 app.use((error, req, res, next)=> {
   res.status(500).send({message: "erro: capturado em app.use(error)"})
-})
+});
 
 module.exports = app;

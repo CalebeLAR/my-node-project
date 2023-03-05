@@ -21,3 +21,5 @@
 ## dia 4
 
 + [x] Introduzindo middlewares aos end-points
++ [x] Tratando erros com o express-async-errors
++ [x] Tratando erros o middleware de error
