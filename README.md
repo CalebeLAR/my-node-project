@@ -20,6 +20,10 @@
 
 ## dia 4
 
-+ [x] Introduzindo middlewares aos end-points
++ [x] criando middlewares
++ [x] criando middlewares globais que interceptam todas ou quase todas as rotas
 + [x] Tratando erros com o express-async-errors
 + [x] Tratando erros o middleware de error
++ [x] Agrupando várias rotas em um mesmo lugar com o Router
++ [x] Visualizando logs de requisições do Node.js com o Morgan
++ [x] Compartilhando recursos entre diferentes origens com o Cors
