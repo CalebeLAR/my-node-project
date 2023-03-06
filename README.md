@@ -27,3 +27,7 @@
 + [x] Agrupando várias rotas em um mesmo lugar com o Router
 + [x] Visualizando logs de requisições do Node.js com o Morgan
 + [x] Compartilhando recursos entre diferentes origens com o Cors
+
+## dia 5
+
++ [x] Configurando o MySQL no Express via CLI:
