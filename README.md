@@ -30,4 +30,4 @@
 
 ## dia 5
 
-+ [x] Configurando o MySQL no Express via CLI:
++ [x] Configurando o MySQL no Express via CLI
